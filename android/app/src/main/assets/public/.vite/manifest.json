@@ -1,0 +1,88 @@
+{
+  "_vendor-CRhU3cMR.js": {
+    "file": "_assets/vendor-CRhU3cMR.js",
+    "name": "vendor"
+  },
+  "index.html": {
+    "file": "_assets/index-CfRxFsB0.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vendor-CRhU3cMR.js"
+    ],
+    "dynamicImports": [
+      "pages/_index.tsx",
+      "node_modules/@capacitor/core/dist/index.js",
+      "node_modules/@capacitor/browser/dist/esm/index.js",
+      "node_modules/@capacitor/app/dist/esm/index.js"
+    ],
+    "css": [
+      "_assets/index-B4l4CLF6.css"
+    ]
+  },
+  "node_modules/@capacitor/app/dist/esm/index.js": {
+    "file": "_assets/index-C2L-_46k.js",
+    "name": "index",
+    "src": "node_modules/@capacitor/app/dist/esm/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "node_modules/@capacitor/core/dist/index.js",
+      "_vendor-CRhU3cMR.js"
+    ],
+    "dynamicImports": [
+      "node_modules/@capacitor/app/dist/esm/web.js"
+    ]
+  },
+  "node_modules/@capacitor/app/dist/esm/web.js": {
+    "file": "_assets/web-D5JbxBIy.js",
+    "name": "web",
+    "src": "node_modules/@capacitor/app/dist/esm/web.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "node_modules/@capacitor/core/dist/index.js"
+    ]
+  },
+  "node_modules/@capacitor/browser/dist/esm/index.js": {
+    "file": "_assets/index-CKp8igrA.js",
+    "name": "index",
+    "src": "node_modules/@capacitor/browser/dist/esm/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "node_modules/@capacitor/core/dist/index.js",
+      "_vendor-CRhU3cMR.js"
+    ],
+    "dynamicImports": [
+      "node_modules/@capacitor/browser/dist/esm/web.js"
+    ]
+  },
+  "node_modules/@capacitor/browser/dist/esm/web.js": {
+    "file": "_assets/web-BYtyxZ-O.js",
+    "name": "web",
+    "src": "node_modules/@capacitor/browser/dist/esm/web.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "node_modules/@capacitor/core/dist/index.js"
+    ]
+  },
+  "node_modules/@capacitor/core/dist/index.js": {
+    "file": "_assets/index-CkDnVGu0.js",
+    "name": "index",
+    "src": "node_modules/@capacitor/core/dist/index.js",
+    "isDynamicEntry": true
+  },
+  "pages/_index.tsx": {
+    "file": "_assets/_index-CT1p9qrN.js",
+    "name": "_index",
+    "src": "pages/_index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-CRhU3cMR.js"
+    ],
+    "css": [
+      "_assets/_index-gTjesWDf.css"
+    ]
+  }
+}
