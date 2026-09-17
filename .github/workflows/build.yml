@@ -43,6 +43,14 @@ jobs:
   with:
     packages: ""
 
+          - name: Install Android SDK packages
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
+
       - name: Setup Android NDK
         uses: nttld/setup-ndk@v1
         id: ndk
