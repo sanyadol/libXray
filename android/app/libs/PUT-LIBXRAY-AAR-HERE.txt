@@ -1,0 +1,5 @@
+Put the exact libXray v26.9.9 Android AAR here as:
+libXray.aar
+
+The GitHub Actions build expects:
+android/app/libs/libXray.aar

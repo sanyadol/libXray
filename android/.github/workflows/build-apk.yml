@@ -1,0 +1,48 @@
+name: Build AIUnblock Universal Control
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK
+        run: |
+          sdkmanager "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Check libXray
+        run: |
+          test -f app/libs/libXray.aar
+          ls -lh app/libs/libXray.aar
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Find APK
+        run: |
+          find app/build/outputs/apk -type f -name '*.apk' -ls
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AIUnblock-Universal-Control-debug
+          path: app/build/outputs/apk/debug/*.apk

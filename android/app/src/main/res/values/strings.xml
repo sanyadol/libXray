@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AIUnblock Universal Control</string>
+    <string name="title_activity_main">AIUnblock Universal Control</string>
+    <string name="package_name">com.aiunblock.universal.control</string>
+    <string name="custom_url_scheme">com.aiunblock.universal.control</string>
+</resources>
