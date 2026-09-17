@@ -2,29 +2,16 @@ name: Build libXray v26.9.9 Android
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/build.yml"
 
 jobs:
   android:
-    name: Build Android AAR
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout exact libXray v26.9.9
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: 50b95979f5db551bd273165cf469e5daaf791341
-          fetch-depth: 1
-
-      - name: Verify exact commit
-        run: |
-          echo "Expected:"
-          echo "50b95979f5db551bd273165cf469e5daaf791341"
-          echo "Actual:"
-          git rev-parse HEAD
-          test "$(git rev-parse HEAD)" = "50b95979f5db551bd273165cf469e5daaf791341"
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -39,45 +26,32 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: "temurin"
           java-version: "21"
 
-      - name: Setup Android SDK
+      - name: Setup Android
         uses: android-actions/setup-android@v4
-        with:
-          packages: ""
 
-      - name: Install Android SDK packages
-        run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager --install \
-            "platform-tools" \
-            "platforms;android-35" \
-            "build-tools;35.0.0"
+      - name: Install Android packages
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Setup Android NDK
+      - name: Setup NDK
         uses: nttld/setup-ndk@v1
         with:
           ndk-version: r27c
           add-to-path: true
 
-      - name: Verify Android toolchain
-        run: |
-          echo "=== ANDROID NDK ==="
-          echo "$ANDROID_NDK_HOME"
-
-          echo "=== NDK VERSION ==="
-          cat "$ANDROID_NDK_HOME/source.properties"
-
-          echo "=== GO ==="
-          go version
-
-          echo "=== PYTHON ==="
-          python3 --version
-
-          echo "=== JAVA ==="
-          java -version
-
-      - name: Build libXray Android
+      - name: Build
         env:
-          GOFLAGS: "-ld
+          GOFLAGS: "-ldflags=-checklinkname=0"
+          LIBXRAY_GOMOBILE_VERSION: "v0.0.0-20260908204917-8b95e45f8d3e"
+        run: python3 build/main.py android
+
+      - name: Check AAR
+        run: test -f libXray.aar
+
+      - name: Upload AAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: libXray-v26.9.9-android
+          path: libXray.aar
