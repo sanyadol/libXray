@@ -76,16 +76,7 @@ jobs:
           }
           EOF
           cat > app/src/main/assets/capacitor.plugins.json <<'EOF'
-          [
-            {
-              "pkg": "@capacitor/app",
-              "classpath": "com.capacitorjs.plugins.app.AppPlugin"
-            },
-            {
-              "pkg": "@capacitor/browser",
-              "classpath": "com.capacitorjs.plugins.browser.BrowserPlugin"
-            }
-          ]
+          []
           EOF
           echo "=== Capacitor assets ==="
           ls -lh app/src/main/assets/capacitor*.json
