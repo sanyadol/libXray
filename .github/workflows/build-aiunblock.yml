@@ -64,6 +64,32 @@ jobs:
         working-directory: android
         run: chmod +x ./gradlew
 
+      - name: Prepare Capacitor assets
+        working-directory: android
+        run: |
+          mkdir -p app/src/main/assets
+          cat > app/src/main/assets/capacitor.config.json <<'EOF'
+          {
+            "appId": "com.aiunblock.universal.control",
+            "appName": "AIUnblock Universal Control",
+            "webDir": "dist"
+          }
+          EOF
+          cat > app/src/main/assets/capacitor.plugins.json <<'EOF'
+          [
+            {
+              "pkg": "@capacitor/app",
+              "classpath": "com.capacitorjs.plugins.app.AppPlugin"
+            },
+            {
+              "pkg": "@capacitor/browser",
+              "classpath": "com.capacitorjs.plugins.browser.BrowserPlugin"
+            }
+          ]
+          EOF
+          echo "=== Capacitor assets ==="
+          ls -lh app/src/main/assets/capacitor*.json
+
       - name: Build Debug APK
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon --stacktrace
