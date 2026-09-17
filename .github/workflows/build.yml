@@ -2,6 +2,9 @@ name: Build libXray v26.9.9 Android
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/build.yml"
 
 jobs:
   android:
