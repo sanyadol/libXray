@@ -31,9 +31,14 @@ jobs:
 
       - name: Setup Android
         uses: android-actions/setup-android@v4
+        with:
+          packages: ""
 
       - name: Install Android packages
-        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+        run: |
+          sdkmanager "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
 
       - name: Setup NDK
         uses: nttld/setup-ndk@v1
@@ -45,10 +50,13 @@ jobs:
         env:
           GOFLAGS: "-ldflags=-checklinkname=0"
           LIBXRAY_GOMOBILE_VERSION: "v0.0.0-20260908204917-8b95e45f8d3e"
-        run: python3 build/main.py android
+        run: |
+          python3 build/main.py android
 
       - name: Check AAR
-        run: test -f libXray.aar
+        run: |
+          test -f libXray.aar
+          ls -lh libXray.aar
 
       - name: Upload AAR
         uses: actions/upload-artifact@v4
