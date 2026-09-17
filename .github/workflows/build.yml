@@ -80,28 +80,4 @@ jobs:
 
       - name: Build libXray Android
         env:
-          GOFLAGS: "-ldflags=-checklinkname=0"
-          LIBXRAY_GOMOBILE_VERSION: "v0.0.0-20260908204917-8b95e45f8d3e"
-        run: |
-          echo "=== COMMIT ==="
-          git rev-parse HEAD
-
-          echo "=== BUILD libXray Android ==="
-          python3 build/main.py android
-
-      - name: Verify AAR
-        run: |
-          test -f libXray.aar
-          test -f libXray-sources.jar
-
-          echo "=== AAR ==="
-          ls -lh libXray.aar
-
-          echo "=== SOURCES ==="
-          ls -lh libXray-sources.jar
-
-          echo "=== AAR CONTENT ==="
-          unzip -l libXray.aar | grep -E "jni|arm64-v8a|classes.jar"
-
-      - name: Upload Android AAR
-        uses: actions
+          GOFLAGS: "-ld
