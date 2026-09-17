@@ -41,18 +41,18 @@ jobs:
           distribution: temurin
           java-version: "21"
 
-      - name: Setup Android SDK
-  uses: android-actions/setup-android@v4
-  with:
-    packages: ""
+                - name: Setup Android SDK
+            uses: android-actions/setup-android@v4
+            with:
+              packages: ""
 
           - name: Install Android SDK packages
-        run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager --install \
-            "platform-tools" \
-            "platforms;android-35" \
-            "build-tools;35.0.0"
+            run: |
+              yes | sdkmanager --licenses >/dev/null || true
+              sdkmanager --install \
+                "platform-tools" \
+                "platforms;android-35" \
+                "build-tools;35.0.0"
 
       - name: Setup Android NDK
         uses: nttld/setup-ndk@v1
