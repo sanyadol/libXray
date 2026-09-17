@@ -1,6 +1,9 @@
 name: Build AIUnblock Universal Control
 
 on:
+  push:
+    branches:
+      - aiunblock-universal-control
   workflow_dispatch:
 
 jobs:
