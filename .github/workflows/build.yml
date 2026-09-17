@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout exact v26.9.9
+      - name: Checkout exact libXray v26.9.9
         uses: actions/checkout@v4
         with:
           ref: 50b95979f5db551bd273165cf469e5daaf791341
@@ -16,6 +16,9 @@ jobs:
 
       - name: Verify exact commit
         run: |
+          echo "Expected:"
+          echo "50b95979f5db551bd273165cf469e5daaf791341"
+          echo "Actual:"
           git rev-parse HEAD
           test "$(git rev-parse HEAD)" = "50b95979f5db551bd273165cf469e5daaf791341"
 
@@ -40,13 +43,20 @@ jobs:
 
       - name: Setup Android NDK
         uses: nttld/setup-ndk@v1
+        id: ndk
         with:
           ndk-version: r27c
           add-to-path: true
 
-      - name: Install dependencies
+      - name: Verify Android toolchain
         run: |
-          python -m pip install --upgrade pip
+          echo "ANDROID_NDK_HOME=$ANDROID_NDK_HOME"
+          echo "NDK_PATH=${{ steps.ndk.outputs.ndk-path }}"
+          go version
+          python3 --version
+          java -version
+          ls -la "$ANDROID_NDK_HOME"
+          cat "$ANDROID_NDK_HOME/source.properties"
 
       - name: Build libXray
         env:
@@ -56,31 +66,22 @@ jobs:
           echo "=== COMMIT ==="
           git rev-parse HEAD
 
-          echo "=== GO ==="
-          go version
-
-          echo "=== PYTHON ==="
-          python --version
-
-          echo "=== NDK ==="
-          echo "$ANDROID_NDK_HOME"
-          cat "$ANDROID_NDK_HOME/meta/platforms.json"
-
           echo "=== BUILD ==="
           python3 build/main.py android
 
-      - name: Verify output
+      - name: Verify AAR
         run: |
-          ls -lh libXray.aar
-          ls -lh libXray-sources.jar
-
-          echo "=== AAR ==="
-          unzip -l libXray.aar | grep -E "arm64-v8a|classes.jar"
-
           test -f libXray.aar
           test -f libXray-sources.jar
 
-      - name: Upload AAR
+          echo "=== FILES ==="
+          ls -lh libXray.aar
+          ls -lh libXray-sources.jar
+
+          echo "=== AAR CONTENT ==="
+          unzip -l libXray.aar | grep -E "jni|arm64-v8a|classes.jar"
+
+      - name: Upload Android AAR
         uses: actions/upload-artifact@v4
         with:
           name: libXray-v26.9.9-android
